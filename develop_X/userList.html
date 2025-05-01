@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ユーザー表</title>
+  <link rel="stylesheet" href="userList.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.11/dist/vue.js"></script>
+</head>
+<body>
+  <div id="vm">
+    <h1>ユーザー表</h1>
+    <table>
+      <tr v-bind:style="{'background-color': 'gold'}">
+
+        <td>ID</td>
+        <td>名前</td>
+        <td>年齢</td>
+        <td> </td>
+      </tr>
+      <tr v-for="personality in personalitys" :key="personality.id">
+        <td>{{ personality.id }}</td>
+        <td>{{ personality.name }}</td>
+        <td>{{ personality.age }}</td>
+        <td><button v-on:click="showDetail()">詳細</button></td>
+      </tr>
+    </table>
+    ---詳細---
+    
+    <table>
+      <tbody>
+        <tr>
+        <td v-bind:style="{'background-color': 'gold'}">ID</td>
+        <td>console.log()</td>
+        </tr>
+        <tr>
+          <td v-bind:style="{'background-color': 'gold'}">名前</td>
+          <td>console.log()</td>
+          </tr>
+  </div>
+  <script>
+    let vmMain = new Vue({
+    el: '#vm', 
+    data: {
+      personalitys: [
+        { id: 1, name: '岡山 太郎', age: '17'},
+        { id: 2, name: '鳥取 太郎', age: '18'},
+        { id: 3, name: '山田 花子', age: '19'}
+      ]
+    },
+    method:{
+      showDetail:function(){
+        console.log(JSON.stringify())
+      }
+    }
+  });
+    </script>
+</body>
+</html>
