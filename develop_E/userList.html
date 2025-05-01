@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ユーザー表</title>
+  <link rel="stylesheet" href="userList.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.11/dist/vue.js"></script>
+</head>
+<body>
+  <div id="vm">
+    <h1>ユーザー表</h1>
+    <table>
+        <th class="ID">ID</th>
+        <th>名前</th>
+        <th class="old">年齢</th>
+        <th id="detail"></th>
+        <tr v-for="user in users" :key="user.id">
+          <td>{{user.id}}</td>
+          <td>{{user.name}}</td>
+          <td>{{user.old}}</td>
+          <td ><button v-on:click=showDetail() id="detail">詳細</button></td>
+        </tr>    
+    </table>
+    </tr>
+    <div>
+      <table>
+        <h1>詳細</h1>
+        <tr id="syousai">ID
+          <th>名前</th>
+        </tr>    
+      </table>
+    </div>
+  </div>
+  <script>
+          let vmMain = new Vue({
+        // 適応範囲
+        el: '#vm', 
+        data: {
+          users:[
+            {id: 1, name: '岡山 太郎', old: 17},
+            {id: 2, name: '鳥取 一郎', old: 18},
+            {id: 3, name: '山田 花子', old: 19}
+          ],
+        },
+        methods:{
+          showDetail: function(){
+            console.log(JSON.stringify(this.users))
+          }
+        }
+      })
+  </script> 
+</body>
+</html>
