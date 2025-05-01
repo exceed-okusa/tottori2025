@@ -1,0 +1,13 @@
+table {
+  border-collapse: collapse;
+  border: 3px black solid;
+  
+}
+td {
+  border: 3px black solid;
+  text-align: right;
+}
+th {
+  border: 3px black solid; 
+
+}
