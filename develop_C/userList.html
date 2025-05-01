@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ユーザー表</title>
+    <link rel="stylesheet" href="userList.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.11/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="vm">
+      <h1>ユーザー表</h1>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>名前</th>
+          <th>年齢</th>
+          <th></th>
+        </tr>
+        <tr v-for="user in users" :key="user.id">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.age }}</td>
+          <td><button @click="showDetail">詳細</button></td>
+        </tr>
+      </table>
+      <h5>--詳細--</h5>
+      <table>
+        <tr>
+          <th>ID</th>
+          <td>{{}}</td>
+        </tr>
+        <tr>
+          <th>名前</th>
+          <td>{{}}</td>
+        </tr>
+        <tr>
+          <th>年齢</th>
+          <td>{{}}</td>
+        </tr>
+        <tr>
+          <th>身長</th>
+          <td>{{}}</td>
+        </tr>
+        <tr>
+          <th>体重</th>
+          <td>{{}}</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
+<script>
+  new Vue({
+    el: '#vm',
+    data: {
+      users: [
+        { id: 1, ID: '1', name: '岡山太郎', age: 17 },
+        { id: 2, ID: '2', name: '鳥取一郎', age: 18 },
+        { id: 3, ID: '3', name: '山田花子', age: 19 },
+      ],
+    },
+    methods: {
+      showDetail: function (user) {},
+    },
+  });
+</script>
