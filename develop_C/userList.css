@@ -1,16 +1,23 @@
 table {
   border-collapse: collapse;
-  width: 250px;
+  width: auto;
 }
 
 td {
   border: 3px black solid;
-  width: 100px;
+  width: 80px;
   text-align: center;
   font-size: medium;
+  word-break: keep-all;
 }
 th {
   border: 3px black solid;
-  background-color: bisque;
+  background-color: rgb(210, 231, 182);
   font-size: large;
+  word-break: keep-all;
+}
+.table-divition {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
 }
