@@ -16,15 +16,28 @@
           <th>ID</th>
           <th>名前</th>
           <th>年齢</th>
+          <th></th>
         </tr>
         <tr v-for="user in users" :key="user.id">
           <td>{{user.id}}</td>
           <td>{{user.name}}</td>
           <td>{{user.age}}</td>
-          <td><button v-on:click>詳細</button></td>
+          <td><button v-on:click="showDetails(user)">詳細</button></td>
         </tr>
-        
       </tbody>     
+    </table>
+    <h4>--詳細--</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td>ID</td>
+          <td v-text="1">aaaaa</td>
+        </tr>
+        <tr>
+          <td>名前</td>
+          <td>bbbbb</td>
+        </tr>
+      </tbody>
     </table>
   </div>
   
@@ -37,6 +50,14 @@
           {id:2,name:'鳥取一郎',age:18},
           {id:3,name:'山田花子',age:19}
         ]
+      },
+      methods: {
+        showDetails: function(user){
+          // if(this.users == id1){
+            
+          // }
+          console.log(user);
+        }
       }
     });
   </script>
