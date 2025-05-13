@@ -19,33 +19,52 @@
           <td>{{user.id}}</td>
           <td>{{user.name}}</td>
           <td>{{user.old}}</td>
-          <td ><button v-on:click=showDetail() id="detail">詳細</button></td>
+          <td ><button v-on:click="showDetail(user)" id="detail">詳細</button></td>
         </tr>    
     </table>
-    </tr>
     <div>
-      <table>
-        <h1>詳細</h1>
-        <tr id="syousai">ID
+      <h1>詳細</h1>
+    </div>
+    <div class="b">
+      <table class="c">
+        <tr>
+          <th id="syousai">ID</th>
+          <td></td>
+        </tr>
+        <tr>
           <th>名前</th>
-        </tr>    
+          <td></td>
+        </tr>
+      </table>
+      <table>
+          <tr>
+            <th>年齢</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>身長</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>体重</th>
+            <td></td>
+          </tr>
       </table>
     </div>
   </div>
   <script>
           let vmMain = new Vue({
-        // 適応範囲
         el: '#vm', 
         data: {
           users:[
-            {id: 1, name: '岡山 太郎', old: 17},
-            {id: 2, name: '鳥取 一郎', old: 18},
-            {id: 3, name: '山田 花子', old: 19}
+            {id: 1, name: '岡山 太郎', old: 17, height: 170, weight: 60},
+            {id: 2, name: '鳥取 一郎', old: 18, height: 175, weight: 65},
+            {id: 3, name: '山田 花子', old: 19, height: 155, weight: 55}
           ],
         },
         methods:{
-          showDetail: function(){
-            console.log(JSON.stringify(this.users))
+          showDetail: function(user){
+            console.log(user)
           }
         }
       })

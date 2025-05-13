@@ -29,7 +29,7 @@ td{
   font-size: 20px;
   text-align: center;
   width: 30px;
-  height: 30px;
+  height: 30px; 
 }
 .detail{
   border: 3px black solid;
@@ -38,11 +38,18 @@ td{
   width: 30px;
   height: 30px;
 }
-/* tr{
+.tr{
   border: 3px black solid;
   font-size: 20px;
   text-align: center;
   width: 90px;
   height: 30px;
   background-color:lightyellow ;
-} */
+}
+.b{
+  display:flex;
+}
+.c{
+  margin-right: 30px;
+}
+/* display:flexは親要素に書いたら子要素が横並びになる */
