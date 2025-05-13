@@ -13,47 +13,81 @@
     <table>
       <tr v-bind:style="{'background-color': 'gold'}">
 
-        <td>ID</td>
+        <td class="cell">ID</td>
         <td>名前</td>
         <td>年齢</td>
         <td> </td>
       </tr>
-      <tr v-for="personality in personalitys" :key="personality.id">
-        <td>{{ personality.id }}</td>
+      <tr v-for="(personality,t) in personalitys" :key="personality.id">
+        <td class="cell">{{ personality.id }}</td>
         <td>{{ personality.name }}</td>
         <td>{{ personality.age }}</td>
-        <td><button v-on:click="showDetail()">詳細</button></td>
+        <td><button v-on:click="showDetail(t)">詳細</button></td>
       </tr>
     </table>
     ---詳細---
-    
-    <table>
-      <tbody>
-        <tr>
-        <td v-bind:style="{'background-color': 'gold'}">ID</td>
-        <td>console.log(personality.id)</td>
-        </tr>
-        <tr>
-          <td v-bind:style="{'background-color': 'gold'}">名前</td>
-          <td>console.log(personality.name)</td>
+    <div class="field">
+      <table class="field1">
+        <tbody>
+          <tr>
+            <td v-bind:style="{'background-color': 'gold'}" class="cell">ID</td>
+            <td v-text="this.message1"></td>
           </tr>
+          <tr>
+            <td v-bind:style="{'background-color': 'gold'}" class="cell">名前</td>
+            <td v-text="this.message2"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="field2">
+        <tbody>
+          <tr>
+            <td v-bind:style="{'background-color': 'gold'}">年齢</td>
+            <td v-text="this.message3"></td>
+          </tr>
+          <tr>
+            <td v-bind:style="{'background-color': 'gold'}">身長</td>
+            <td v-text="this.message4"></td>
+          </tr>
+          <tr>
+            <td v-bind:style="{'background-color': 'gold'}">体重</td>
+            <td v-text="this.message5"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
   </div>
+
   <script>
     let vmMain = new Vue({
     el: '#vm', 
+   
     data: {
+      message1 : "", 
+      message2 : "",
+      message3 : "", 
+      message4 : "", 
+      message5 : "",  
+
       personalitys: [
-        { id: 1, name: '岡山 太郎', age: '17'},
-        { id: 2, name: '鳥取 太郎', age: '18'},
-        { id: 3, name: '山田 花子', age: '19'}
+        { id: 1, name: '岡山 太郎', age: '17',height:'182',weight:'103'},
+        { id: 2, name: '鳥取 太郎', age: '18',height:'171',weight:'66'},
+        { id: 3, name: '山田 花子', age: '19',height:'170',weight:'65'}
       ]
     },
-    method:{
-      showDetail:function(){
-        console.log(JSON.stringify())
+    methods:{
+      showDetail:function(t){
+        this.message1 = this.personalitys[t].id ;
+        this.message2 = this.personalitys[t].name ;
+        this.message3 = this.personalitys[t].age ;
+        this.message4 = this.personalitys[t].height ;
+        this.message5 = this.personalitys[t].weight ;
+
       }
     }
-  });
+  })
     </script>
 </body>
 </html>

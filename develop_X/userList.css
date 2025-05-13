@@ -8,3 +8,16 @@ table {
   text-align: center;
   font-size: 10px;
 }
+.field{
+  display: flex;
+}
+.field1{
+  width: 100px;
+}
+.field2{
+  width: 70px;
+  margin:5px;
+}
+.cell{
+  width: 20px;
+}
