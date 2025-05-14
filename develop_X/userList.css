@@ -1,7 +1,7 @@
 table {
   border-collapse: collapse;
 }
- td {
+td {
   border: 3px black solid;
   width: 50px; 
   height: 5px;
@@ -11,6 +11,7 @@ table {
 .field{
   display: flex;
 }
+/* クラス名はケバブケースを推奨としたいです */
 .field1{
   width: 100px;
 }
@@ -18,6 +19,7 @@ table {
   width: 70px;
   margin:5px;
 }
+/* どのようなセルか？またはどんなCSSを当てるか？からクラス名を決めるのも良いと思います */
 .cell{
   width: 20px;
 }

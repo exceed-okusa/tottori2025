@@ -10,6 +10,7 @@
 <body>
   <div id="vm">
     <h1>ユーザー表</h1>
+    <!-- 枠線と枠内の文字列の間に余白を入れて見やすくしておいてほしいです -->
     <table>
       <tbody>
         <tr>
@@ -27,14 +28,17 @@
       </tbody>     
     </table>
     <h4>--詳細--</h4>
+    <!-- 以下、まだtableが1つの状態です。背景色などのCSSもまだの状態です -->
     <table>
       <tbody>
         <tr>
           <td>ID</td>
+          <!-- td v-textが未完成の状態 -->
           <td v-text="1">aaaaa</td>
         </tr>
         <tr>
           <td>名前</td>
+          <!-- td こちらもv-textが未完成の状態 -->
           <td>bbbbb</td>
         </tr>
       </tbody>
@@ -45,6 +49,7 @@
     let vmMain = new Vue({
       el: '#vm',
       data: {
+        // { id: 1, name: '岡山 太郎'} のように半角スペースを入れて見やすくしましょう。
         users: [
           {id:1,name:'岡山太郎',age:17},
           {id:2,name:'鳥取一郎',age:18},
@@ -53,9 +58,7 @@
       },
       methods: {
         showDetails: function(user){
-          // if(this.users == id1){
-            
-          // }
+          // 以下、未完成です。
           console.log(user);
         }
       }

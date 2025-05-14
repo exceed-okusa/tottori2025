@@ -11,28 +11,36 @@
   <div id="vm">
     <h1>ユーザー表</h1>
     <table>
+      <!-- インデントが1つ多いです。 -->
+      <!-- class名はケバブケースを推奨したいです -->
+      <!-- class="ID"や"old"が１箇所しか使用されていないのであればclassではなくidで良い？ -->
+      <!-- 1行目にtrがないので追加してください。 -->
         <th class="ID">ID</th>
         <th>名前</th>
         <th class="old">年齢</th>
+        <!-- 逆に、id="detail"が複数箇所あるのは危険です。idは一意です。 -->
         <th id="detail"></th>
         <tr v-for="user in users" :key="user.id">
           <td>{{user.id}}</td>
           <td>{{user.name}}</td>
           <td>{{user.old}}</td>
-          <td ><button v-on:click="showDetail(user)" id="detail">詳細</button></td>
-        </tr>    
+          <td><button v-on:click="showDetail(user)" id="detail">詳細</button></td>
+        </tr>
     </table>
     <div>
       <h1>詳細</h1>
     </div>
+    <!-- class名でbやcだと何を意味しているかが予測できません。どういう箇所に当てるCSSかなどを考えて名前を付けましょう -->
     <div class="b">
       <table class="c">
         <tr>
+          <!-- detailとsyousaiが同じ意味で困ると思いますが、可能な限り日本語ローマ字表記は避けたいです -->
           <th id="syousai">ID</th>
           <td></td>
         </tr>
         <tr>
           <th>名前</th>
+          <!-- 以下、各td未完成 -->
           <td></td>
         </tr>
       </table>
@@ -53,6 +61,7 @@
     </div>
   </div>
   <script>
+    // インデントがズレています。
           let vmMain = new Vue({
         el: '#vm', 
         data: {
@@ -64,6 +73,7 @@
         },
         methods:{
           showDetail: function(user){
+            // 以下、未完成です
             console.log(user)
           }
         }

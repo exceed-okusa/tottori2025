@@ -1,6 +1,7 @@
 table{
   border-collapse: collapse;
 }
+/* 以下、共通部分が大半を占めているので共通箇所は th, tdなどのようにまとめるとスッキリします */
 th{
   border: 3px black solid;
   font-size: 20px;
@@ -53,3 +54,4 @@ td{
   margin-right: 30px;
 }
 /* display:flexは親要素に書いたら子要素が横並びになる */
+/* ↑ メモは消しておきましょう */

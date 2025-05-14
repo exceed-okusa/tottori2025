@@ -25,6 +25,7 @@
         </tr>
       </table>
       <h5>--詳細--</h5>
+      <!-- divition → division の間違いと思われるのでclass名・CSSともに修正を -->
       <div class="table-divition">
         <!-- 詳細テーブル -->
         <table>
@@ -59,11 +60,14 @@
   new Vue({
     el: '#userTable',
     data: {
+      // selectedUser.id のようにidは使用するが、IDは使用していないので削除してOKです。
       users: [
         { id: 1, ID: '1', name: '岡山太郎', age: 17, height: 180, weight: 90 },
         { id: 2, ID: '2', name: '鳥取一郎', age: 18, height: 170, weight: 60 },
         { id: 3, ID: '3', name: '山田花子', age: 19, height: 143, weight: 40 },
       ],
+      // selectedUser が複数になることは現時点ないので配列でないようにしましょう。
+      // 逆に配列の状態で上手く行っているのかが不明です…Vue.jsが勝手に配慮してくれている？
       selectedUser: [{ ID: '', name: '', age: '', height: '', weight: '' }],
     },
     methods: {

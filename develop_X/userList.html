@@ -11,13 +11,15 @@
   <div id="vm">
     <h1>ユーザー表</h1>
     <table>
+      <!-- ※1 Vueの変数を参照しないのであればv-bindが不要です -->
       <tr v-bind:style="{'background-color': 'gold'}">
-
         <td class="cell">ID</td>
         <td>名前</td>
         <td>年齢</td>
-        <td> </td>
+        <td></td>
       </tr>
+      <!-- v-forのindexの使い方が素晴らしいですが、tよりindexなどへすると意味がもっと伝わりやすくなります -->
+      <!-- personalitys → personalities へ変更を -->
       <tr v-for="(personality,t) in personalitys" :key="personality.id">
         <td class="cell">{{ personality.id }}</td>
         <td>{{ personality.name }}</td>
@@ -25,21 +27,25 @@
         <td><button v-on:click="showDetail(t)">詳細</button></td>
       </tr>
     </table>
+    <!-- 文字列を直打ちはなかなか見かけないので、何かのタグに入れておいてほしいです -->
     ---詳細---
     <div class="field">
       <table class="field1">
         <tbody>
           <tr>
+            <!-- ※1 -->
             <td v-bind:style="{'background-color': 'gold'}" class="cell">ID</td>
+            <!-- this.message～がどんなメッセージなのか推測できないのと項目が増えるたびに変数を増やすことになるのでオブジェクト型の変数を用意したいです -->
             <td v-text="this.message1"></td>
           </tr>
           <tr>
+            <!-- ※1 -->
             <td v-bind:style="{'background-color': 'gold'}" class="cell">名前</td>
             <td v-text="this.message2"></td>
           </tr>
         </tbody>
       </table>
-
+      <!-- 以下も同様に※1 -->
       <table class="field2">
         <tbody>
           <tr>
@@ -57,20 +63,18 @@
         </tbody>
       </table>
     </div>
-    
   </div>
 
   <script>
     let vmMain = new Vue({
+      // インデントがずれています
     el: '#vm', 
-   
     data: {
       message1 : "", 
       message2 : "",
       message3 : "", 
       message4 : "", 
       message5 : "",  
-
       personalitys: [
         { id: 1, name: '岡山 太郎', age: '17',height:'182',weight:'103'},
         { id: 2, name: '鳥取 太郎', age: '18',height:'171',weight:'66'},
@@ -84,7 +88,6 @@
         this.message3 = this.personalitys[t].age ;
         this.message4 = this.personalitys[t].height ;
         this.message5 = this.personalitys[t].weight ;
-
       }
     }
   })
