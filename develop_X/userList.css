@@ -1,25 +1,36 @@
 table {
   border-collapse: collapse;
 }
+th {
+  border: 3px black solid;
+  background-color: rgb(210, 231, 182);
+  word-break: keep-all;
+  font-size: large;
+}
 td {
   border: 3px black solid;
-  width: 50px; 
-  height: 5px;
-  text-align: center;
-  font-size: 10px;
+  width: 50px;
+  text-align: right;
+  font-size: 15px;
+  white-space: nowrap;
 }
-.field{
+.field {
   display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: right;
 }
-/* クラス名はケバブケースを推奨としたいです */
-.field1{
-  width: 100px;
+
+.selectedDetail {
+  background-color: yellow;
 }
-.field2{
-  width: 70px;
-  margin:5px;
+.editing {
+  color: red;
 }
-/* どのようなセルか？またはどんなCSSを当てるか？からクラス名を決めるのも良いと思います */
-.cell{
-  width: 20px;
+
+td input {
+  width: 50px;
+  font-size: 15px;
+  text-align: right;
+  white-space: nowrap;
 }

@@ -1,96 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ユーザー表</title>
-  <link rel="stylesheet" href="userList.css">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.11/dist/vue.js"></script>
-</head>
-<body>
-  <div id="vm">
-    <h1>ユーザー表</h1>
-    <table>
-      <!-- ※1 Vueの変数を参照しないのであればv-bindが不要です -->
-      <tr v-bind:style="{'background-color': 'gold'}">
-        <td class="cell">ID</td>
-        <td>名前</td>
-        <td>年齢</td>
-        <td></td>
-      </tr>
-      <!-- v-forのindexの使い方が素晴らしいですが、tよりindexなどへすると意味がもっと伝わりやすくなります -->
-      <!-- personalitys → personalities へ変更を -->
-      <tr v-for="(personality,t) in personalitys" :key="personality.id">
-        <td class="cell">{{ personality.id }}</td>
-        <td>{{ personality.name }}</td>
-        <td>{{ personality.age }}</td>
-        <td><button v-on:click="showDetail(t)">詳細</button></td>
-      </tr>
-    </table>
-    <!-- 文字列を直打ちはなかなか見かけないので、何かのタグに入れておいてほしいです -->
-    ---詳細---
-    <div class="field">
-      <table class="field1">
-        <tbody>
-          <tr>
-            <!-- ※1 -->
-            <td v-bind:style="{'background-color': 'gold'}" class="cell">ID</td>
-            <!-- this.message～がどんなメッセージなのか推測できないのと項目が増えるたびに変数を増やすことになるのでオブジェクト型の変数を用意したいです -->
-            <td v-text="this.message1"></td>
-          </tr>
-          <tr>
-            <!-- ※1 -->
-            <td v-bind:style="{'background-color': 'gold'}" class="cell">名前</td>
-            <td v-text="this.message2"></td>
-          </tr>
-        </tbody>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ユーザー表</title>
+    <link rel="stylesheet" href="userList.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.11/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="vm">
+      <h1>ユーザー表</h1>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>名前</th>
+          <th>年齢</th>
+          <th></th>
+        </tr>
+        <tr
+          v-for="(personality,index) in personalities"
+          :key="personality.id"
+          v-bind:class="{'selectedDetail':selectedPersonality==personality}"
+        >
+          <td>{{ personality.id }}</td>
+          <td>{{ personality.name }}</td>
+          <td>{{ personality.age }}</td>
+          <td>
+            <button v-on:click="showDetail(index)">詳細</button>
+          </td>
+        </tr>
       </table>
-      <!-- 以下も同様に※1 -->
-      <table class="field2">
-        <tbody>
-          <tr>
-            <td v-bind:style="{'background-color': 'gold'}">年齢</td>
-            <td v-text="this.message3"></td>
-          </tr>
-          <tr>
-            <td v-bind:style="{'background-color': 'gold'}">身長</td>
-            <td v-text="this.message4"></td>
-          </tr>
-          <tr>
-            <td v-bind:style="{'background-color': 'gold'}">体重</td>
-            <td v-text="this.message5"></td>
-          </tr>
-        </tbody>
-      </table>
+      <h5>---詳細---</h5>
+      <button v-on:click="addEdit()">編集</button>
+      <span class="editing">{{message}}</span>
+      <div class="field">
+        <table class="field-left">
+          <tbody>
+            <tr>
+              <th>ID</th>
+              <td>
+                <template v-if="isEdit">
+                  <input v-model="selectedPersonality.id" />
+                </template>
+                <template v-else> {{selectedPersonality.id}} </template>
+              </td>
+            </tr>
+            <tr>
+              <th>名前</th>
+              <td>
+                <template v-if="isEdit">
+                  <input v-model="selectedPersonality.name" />
+                </template>
+                <template v-else> {{selectedPersonality.name}} </template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="field-right">
+          <tbody>
+            <tr>
+              <th>年齢</th>
+              <td>
+                <template v-if="isEdit">
+                  <input v-model="selectedPersonality.age" />
+                </template>
+                <template v-else> {{selectedPersonality.age}} </template>
+              </td>
+            </tr>
+            <tr>
+              <th>身長</th>
+              <td>
+                <template v-if="isEdit">
+                  <input v-model="selectedPersonality.height" />
+                </template>
+                <template v-else>{{selectedPersonality.height}}</template>
+              </td>
+            </tr>
+            <tr>
+              <th>体重</th>
+              <td>
+                <template v-if="isEdit">
+                  <input v-model="selectedPersonality.weight" />
+                </template>
+                <template v-else> {{selectedPersonality.weight}} </template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <script>
-    let vmMain = new Vue({
-      // インデントがずれています
-    el: '#vm', 
-    data: {
-      message1 : "", 
-      message2 : "",
-      message3 : "", 
-      message4 : "", 
-      message5 : "",  
-      personalitys: [
-        { id: 1, name: '岡山 太郎', age: '17',height:'182',weight:'103'},
-        { id: 2, name: '鳥取 太郎', age: '18',height:'171',weight:'66'},
-        { id: 3, name: '山田 花子', age: '19',height:'170',weight:'65'}
-      ]
-    },
-    methods:{
-      showDetail:function(t){
-        this.message1 = this.personalitys[t].id ;
-        this.message2 = this.personalitys[t].name ;
-        this.message3 = this.personalitys[t].age ;
-        this.message4 = this.personalitys[t].height ;
-        this.message5 = this.personalitys[t].weight ;
-      }
-    }
-  })
+    <script>
+      let vmMain = new Vue({
+        el: '#vm',
+        data: {
+          selectedPersonality: {
+            ID: '',
+            name: '',
+            age: '',
+            height: '',
+            weight: '',
+          },
+
+          personalities: [
+            {
+              id: 1,
+              name: '岡山 太郎',
+              age: '17',
+              height: '182',
+              weight: '103',
+            },
+            {
+              id: 2,
+              name: '鳥取 太郎',
+              age: '18',
+              height: '171',
+              weight: '66',
+            },
+            {
+              id: 3,
+              name: '山田 花子',
+              age: '19',
+              height: '170',
+              weight: '65',
+            },
+          ],
+          isEdit: false,
+          message: '',
+        },
+        methods: {
+          showDetail: function (index) {
+            this.selectedPersonality = this.personalities[index];
+          },
+          addEdit: function (index) {
+            this.isEdit = true;
+            this.message = '編集中';
+          },
+        },
+      });
     </script>
-</body>
+  </body>
 </html>
