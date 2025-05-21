@@ -1,13 +1,40 @@
 table {
   border-collapse: collapse;
   border: 3px black solid;
-  
 }
 td {
   border: 3px black solid;
   text-align: right;
+  text-align: center;
+  padding: 10px;
 }
 th {
   border: 3px black solid; 
+  background-color: lightyellow;
+}
+.detail-head{
+    background-color: lightyellow;
+}
+.detail-split{
+  display: flex;
+  align-items: flex-start
+}
+.detail-blank{
+  margin-right: 30px;
+}
+.edit{
+  margin-bottom: 10px;
+}
+.yellow{
   background-color: yellow;
+}
+.editColor{
+  color:red ;
+}
+.blank{
+  width: 70px;
+}
+.word{
+  text-align: right;
+  width: 80px;
 }

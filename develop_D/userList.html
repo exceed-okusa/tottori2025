@@ -10,7 +10,6 @@
 <body>
   <div id="vm">
     <h1>ユーザー表</h1>
-    <!-- 枠線と枠内の文字列の間に余白を入れて見やすくしておいてほしいです -->
     <table>
       <tbody>
         <tr>
@@ -19,47 +18,99 @@
           <th>年齢</th>
           <th></th>
         </tr>
-        <tr v-for="user in users" :key="user.id">
-          <td>{{user.id}}</td>
-          <td>{{user.name}}</td>
-          <td>{{user.age}}</td>
-          <td><button v-on:click="showDetails(user)">詳細</button></td>
+        <tr v-for="user in users" v-bind:class="{'yellow':usersInformation.id==user.id}">
+          <td >{{user.id}}</td>
+          <td >{{user.name}}</td>
+          <td >{{user.age}}</td>
+          <td ><button v-on:click="showDetails(user)">詳細</button></td>
         </tr>
       </tbody>     
     </table>
     <h4>--詳細--</h4>
-    <!-- 以下、まだtableが1つの状態です。背景色などのCSSもまだの状態です -->
-    <table>
-      <tbody>
-        <tr>
-          <td>ID</td>
-          <!-- td v-textが未完成の状態 -->
-          <td v-text="1">aaaaa</td>
-        </tr>
-        <tr>
-          <td>名前</td>
-          <!-- td こちらもv-textが未完成の状態 -->
-          <td>bbbbb</td>
-        </tr>
-      </tbody>
-    </table>
+     <button v-on:click="countUp" class="edit">編集</button>
+        <span v-if="judge==false" class="editColor">編集中</span>
+     <div class="detail-split">
+        <table class="detail-blank">
+          <tbody>
+            <tr>
+              <td class="detail-head">ID</td>
+              <span v-if="judge==false">
+              <td v-text="usersInformation.id" v-if="judge==true" class="blank"></td>
+              </span>
+              <td v-if="judge==false">
+                <input type="text" v-model="usersInformation.id" class="word">
+              </td>
+            </tr>
+            <tr>
+              <td class="detail-head">名前
+                <span v-if="judge==false">
+              <td v-text="usersInformation.name" v-if="judge==true" class="blank"></td>
+              </span>
+              <td v-if="judge==false">
+                <input type="text" v-model="usersInformation.name" class="word">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <tbody>
+            <tr>
+              <td class="detail-head">年齢
+                              <span v-if="judge==false">
+              <td v-text="usersInformation.age" v-if="judge==true" class="blank"></td>
+              </span>
+              <td v-if="judge==false">
+                <input type="text" v-model="usersInformation.age" class="word">
+              </td>
+            </tr>
+            <tr>
+              <td class="detail-head">身長
+                              <span v-if="judge==false">
+              <td v-text="usersInformation.height" v-if="judge==true" class="blank"></td>
+              </span>
+              <td v-if="judge==false">
+                <input type="text" v-model="usersInformation.height" class="word">
+              </td>
+            </tr>
+            <tr>
+              <td class="detail-head">体重
+                <span v-if="judge==false">
+              <td v-text="usersInformation.weight" v-if="judge==true" class="blank"></td>
+              </span>
+              <td v-if="judge==false">
+                <input type="text" v-model="usersInformation.weight" class="word">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
   </div>
   
   <script>
     let vmMain = new Vue({
       el: '#vm',
       data: {
-        // { id: 1, name: '岡山 太郎'} のように半角スペースを入れて見やすくしましょう。
         users: [
-          {id:1,name:'岡山太郎',age:17},
-          {id:2,name:'鳥取一郎',age:18},
-          {id:3,name:'山田花子',age:19}
-        ]
+          {id: 1, name: '岡山太郎', age: 17, height: 165, weight: 60,},
+          {id: 2, name: '鳥取一郎', age: 18, height: 170, weight: 80,},
+          {id: 3, name: '山田花子', age: 19, height: 155, weight: 50,}
+        ],
+        usersInformation:{id: '', name: '', age: '', height: '', weight: ''},
+        count: 0,
+        judge: true
       },
       methods: {
         showDetails: function(user){
-          // 以下、未完成です。
-          console.log(user);
+          this.usersInformation=user
+        },
+        countUp: function(){
+          this.count++
+          if(this.count%2==1){
+            this.judge=false
+          }else{
+            this.judge=true
+          }
+          console.log(this.judge)
         }
       }
     });
