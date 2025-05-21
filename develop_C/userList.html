@@ -18,37 +18,63 @@
           <th></th>
         </tr>
         <tr v-for="user in users" :key="user.id">
-          <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.age }}</td>
-          <td><button @click="showDetail(user)">詳細</button></td>
+          <td v-bind:class="{'detail':user == selectedUser}">{{ user.id }}</td>
+          <td v-bind:class="{'detail':user == selectedUser}">{{ user.name }}</td>
+          <td v-bind:class="{'detail':user == selectedUser}">{{ user.age }}</td>
+          <td v-bind:class="{'detail':user == selectedUser}"><button @click="showDetail(user)">詳細</button></td>
         </tr>
       </table>
       <h5>--詳細--</h5>
+        <button @click="edit()">編集</button>
       <!-- divition → division の間違いと思われるのでclass名・CSSともに修正を -->
-      <div class="table-divition">
+      <div class="table-division">
         <!-- 詳細テーブル -->
         <table>
           <tr>
-            <th>ID</th>
-            <td>{{selectedUser.id}}</td>
+            <th>ID</th>          
+            <td v-if="isEdit==false">
+              {{selectedUser.id}}
+            </td>
+            <td v-else>
+              <input type="text" id="ID">
+            </td>
           </tr>
           <tr>
             <th>名前</th>
-            <td>{{selectedUser.name}}</td>
+            <td v-if="isEdit==false">
+              {{selectedUser.name}}
+            </td>
+            <td v-else>
+              <input type="text" id="my-name">
+            </td>
           </tr>
           <table>
             <tr>
               <th>年齢</th>
-              <td>{{selectedUser.age}}</td>
+              <td v-if="isEdit==false">
+                {{selectedUser.age}}
+              </td>
+              <td v-else>
+                <input type="text" id="age">
+              </td>
             </tr>
             <tr>
               <th>身長</th>
-              <td>{{selectedUser.height}}</td>
+              <td v-if="isEdit==false">
+                {{selectedUser.height}}
+              </td>
+              <td v-else>
+                <input type="text" id="height">
+              </td>
             </tr>
             <tr>
               <th>体重</th>
-              <td>{{selectedUser.weight}}</td>
+              <td v-if="isEdit==false">
+                {{selectedUser.weight}}
+              </td>
+              <td v-else>
+                <input type="text" id="weight">
+              </td>
             </tr>
           </table>
         </table>
@@ -60,20 +86,28 @@
   new Vue({
     el: '#userTable',
     data: {
+      isEdit:false,
       // selectedUser.id のようにidは使用するが、IDは使用していないので削除してOKです。
       users: [
-        { id: 1, ID: '1', name: '岡山太郎', age: 17, height: 180, weight: 90 },
-        { id: 2, ID: '2', name: '鳥取一郎', age: 18, height: 170, weight: 60 },
-        { id: 3, ID: '3', name: '山田花子', age: 19, height: 143, weight: 40 },
+        { id: 1, name: '岡山太郎', age: 17, height: 180, weight: 90 },
+        { id: 2,  name: '鳥取一郎', age: 18, height: 170, weight: 60 },
+        { id: 3,  name: '山田花子', age: 19, height: 143, weight: 40 },
       ],
       // selectedUser が複数になることは現時点ないので配列でないようにしましょう。
       // 逆に配列の状態で上手く行っているのかが不明です…Vue.jsが勝手に配慮してくれている？
-      selectedUser: [{ ID: '', name: '', age: '', height: '', weight: '' }],
+      selectedUser: { ID: '', name: '', age: '', height: '', weight: '' },
     },
     methods: {
       showDetail: function (user) {
         this.selectedUser = user;
       },
+      edit: function () {
+        if(this.isEdit){
+          false;
+        }
+      },
+
+      },
     },
-  });
+  );
 </script>

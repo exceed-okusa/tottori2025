@@ -16,8 +16,11 @@ th {
   font-size: large;
   word-break: keep-all;
 }
-.table-divition {
+.table-division {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
+}
+.detail {
+  background-color: yellow;
 }
