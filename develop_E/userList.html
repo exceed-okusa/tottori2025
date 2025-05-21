@@ -18,65 +18,121 @@
         <th class="ID">ID</th>
         <th>名前</th>
         <th class="old">年齢</th>
-        <!-- 逆に、id="detail"が複数箇所あるのは危険です。idは一意です。 -->
-        <th id="detail"></th>
-        <tr v-for="user in users" :key="user.id">
+        <th> </th>
+
+        <tr v-for="(user , index) in users" v-bind:class="{'yellow': user.id == SelectedId}">
           <td>{{user.id}}</td>
           <td>{{user.name}}</td>
           <td>{{user.old}}</td>
-          <td><button v-on:click="showDetail(user)" id="detail">詳細</button></td>
+          <td><button v-on:click="showDetail(index)">詳細</button></td>
         </tr>
     </table>
     <div>
-      <h1>詳細</h1>
+      <span>--詳細--</span>
+      <div>
+        <button v-on:click="showEditing()">編集</button>
+        <span v-if="this.judgementBox" style="color: red;">編集中</span>
+      </div>
     </div>
-    <!-- class名でbやcだと何を意味しているかが予測できません。どういう箇所に当てるCSSかなどを考えて名前を付けましょう -->
-    <div class="b">
-      <table class="c">
+    
+    <div class="SideBySide">
+      <table class="Interval">
         <tr>
-          <!-- detailとsyousaiが同じ意味で困ると思いますが、可能な限り日本語ローマ字表記は避けたいです -->
-          <th id="syousai">ID</th>
-          <td></td>
+          <th>ID</th>
+          <td class="width1">
+            <span v-if="this.vanish">
+              {{this.SelectedId}}
+            </span>
+            <input type="text" v-if="this.judgementBox" v-model="this.SelectedId" size="8">
+          </td>
         </tr>
         <tr>
           <th>名前</th>
-          <!-- 以下、各td未完成 -->
-          <td></td>
+          <td class="width1">
+            <span v-if="this.vanish">
+              {{this.SelectedName}}
+            </span>
+            <input type="text" v-if="this.judgementBox" v-model="this.SelectedName" size="8">
+          </td>
         </tr>
       </table>
       <table>
           <tr>
             <th>年齢</th>
-            <td></td>
+            <td class="width1">
+              <span v-if="this.vanish">
+                {{this.SelectedOld}}
+              </span>
+              <input type="text" v-if="this.judgementBox" v-model="this.SelectedOld" size="8">
+            </td>
           </tr>
           <tr>
             <th>身長</th>
-            <td></td>
+            <td class="width1">
+              <span v-if="this.vanish">
+                {{this.SelectedHeight}}
+              </span>
+              <input type="text" v-if="this.judgementBox" v-model="this.SelectedHeight" size="8">
+            </td>
           </tr>
           <tr>
             <th>体重</th>
-            <td></td>
+            <td class="width1">
+              <span v-if="this.vanish">
+                {{ this.SelectedWeight }}
+              </span>
+              <input type="text" v-if="this.judgementBox" v-model="this.SelectedWeight" size="8">
+            </td>
           </tr>
       </table>
+
+
+      
+
+
+      
+
     </div>
   </div>
   <script>
     // インデントがズレています。
-          let vmMain = new Vue({
+    let vmMain = new Vue({
         el: '#vm', 
-        data: {
+        data:{
+          SelectedId: "" ,
+          SelectedName: "" ,
+          SelectedOld: "" ,
+          SelectedHeight: "" ,
+          SelectedWeight: "" ,
           users:[
             {id: 1, name: '岡山 太郎', old: 17, height: 170, weight: 60},
             {id: 2, name: '鳥取 一郎', old: 18, height: 175, weight: 65},
             {id: 3, name: '山田 花子', old: 19, height: 155, weight: 55}
           ],
+          number : 0,
+          judgementBox: "" ,
+          vanish: true
         },
         methods:{
-          showDetail: function(user){
-            // 以下、未完成です
-            console.log(user)
+          showDetail: function(index){
+            this.SelectedId = this.users[index].id
+            this.SelectedName = this.users[index].name
+            this.SelectedOld = this.users[index].old
+            this.SelectedHeight = this.users[index].height
+            this.SelectedWeight= this.users[index].weight
+            // document.getElementById('index').style.backgroundColor = 'yellow';
+          },
+          showEditing: function(){
+            this.number++
+            if(this.number % 2 != 0){
+               this.judgementBox = true
+               this.vanish = false
+            }else{ 
+              this.judgementBox = false
+              this.vanish = true 
+            }
           }
-        }
+        },
       })
   </script> 
 </body>

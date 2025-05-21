@@ -47,11 +47,17 @@ td{
   height: 30px;
   background-color:lightyellow ;
 }
-.b{
+.SideBySide{
   display:flex;
 }
-.c{
+.Interval{
   margin-right: 30px;
+}
+.width1{
+  width: 100px;
 }
 /* display:flexは親要素に書いたら子要素が横並びになる */
 /* ↑ メモは消しておきましょう */
+.yellow{
+  background-color: yellow;
+}
