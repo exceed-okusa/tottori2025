@@ -1,53 +1,75 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ユーザー表</title>
-  <link rel="stylesheet" href="userList.css">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.11/dist/vue.js"></script>
-</head>
-<body>
-  <div id="vm">
-    <h1>ユーザー表</h1>
-    <table>
-      <tbody>
-        <tr>
-          <th>ID</th>
-          <th>名前</th>
-          <th>年齢</th>
-          <th></th>
-        </tr>
-        <tr v-for="user in users" v-bind:class="{'yellow':usersInformation.id==user.id}">
-          <td >{{user.id}}</td>
-          <td >{{user.name}}</td>
-          <td >{{user.age}}</td>
-          <td ><button v-on:click="showDetails(user)">詳細</button></td>
-        </tr>
-      </tbody>     
-    </table>
-    <h4>--詳細--</h4>
-     <button v-on:click="countUp" class="edit">編集</button>
-        <span v-if="judge==false" class="editColor">編集中</span>
-     <div class="detail-split">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ユーザー表</title>
+    <link rel="stylesheet" href="userList.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.11/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="vm">
+      <h1>ユーザー表</h1>
+      <table>
+        <tbody>
+          <tr>
+            <th>ID</th>
+            <th>名前</th>
+            <th>年齢</th>
+            <th></th>
+          </tr>
+          <tr
+            v-for="(user,index) in users"
+            v-bind:class="{'yellow':usersInformation.id==user.id}"
+          >
+            <td>{{index+1}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.age}}</td>
+            <td><button v-on:click="showDetails(user,index)">詳細</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>--詳細--</h4>
+      <button v-on:click="countUp" class="edit">編集</button>
+      <span v-if="judge==false" class="editColor">編集中</span>
+      <span
+        ><button v-on:click="saveEdit()">保存</button
+        ><button v-on:click="addData()">追加</button></span
+      >
+      <div class="detail-split">
         <table class="detail-blank">
           <tbody>
             <tr>
               <td class="detail-head">ID</td>
               <span v-if="judge==false">
-              <td v-text="usersInformation.id" v-if="judge==true" class="blank"></td>
+                <td
+                  v-text="usersInformation.id"
+                  v-if="judge==true"
+                  class="blank"
+                ></td>
               </span>
-              <td v-if="judge==false">
-                <input type="text" v-model="usersInformation.id" class="word">
-              </td>
+              <td v-if="judge==false">{{usersInformation.id}}</td>
             </tr>
             <tr>
-              <td class="detail-head">名前
+              <td class="detail-head">
+                名前
                 <span v-if="judge==false">
-              <td v-text="usersInformation.name" v-if="judge==true" class="blank"></td>
-              </span>
+                  <td
+                    v-text="usersInformation.name"
+                    v-if="judge==true"
+                    class="blank"
+                  >
+                    {{usersInformation.id}}
+                  </td>
+                </span>
+              </td>
+
               <td v-if="judge==false">
-                <input type="text" v-model="usersInformation.name" class="word">
+                <input
+                  type="text"
+                  v-model="usersInformation.name"
+                  class="word"
+                />
               </td>
             </tr>
           </tbody>
@@ -55,65 +77,133 @@
         <table>
           <tbody>
             <tr>
-              <td class="detail-head">年齢
-                              <span v-if="judge==false">
-              <td v-text="usersInformation.age" v-if="judge==true" class="blank"></td>
-              </span>
-              <td v-if="judge==false">
-                <input type="text" v-model="usersInformation.age" class="word">
-              </td>
-            </tr>
-            <tr>
-              <td class="detail-head">身長
-                              <span v-if="judge==false">
-              <td v-text="usersInformation.height" v-if="judge==true" class="blank"></td>
-              </span>
-              <td v-if="judge==false">
-                <input type="text" v-model="usersInformation.height" class="word">
-              </td>
-            </tr>
-            <tr>
-              <td class="detail-head">体重
+              <td class="detail-head">
+                年齢
                 <span v-if="judge==false">
-              <td v-text="usersInformation.weight" v-if="judge==true" class="blank"></td>
-              </span>
+                  <td
+                    v-text="usersInformation.age"
+                    v-if="judge==true"
+                    class="blank"
+                  ></td>
+                </span>
+              </td>
+
               <td v-if="judge==false">
-                <input type="text" v-model="usersInformation.weight" class="word">
+                <input
+                  type="text"
+                  v-model="usersInformation.age"
+                  class="word"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td class="detail-head">
+                身長
+                <span v-if="judge==false">
+                  <td
+                    v-text="usersInformation.height"
+                    v-if="judge==true"
+                    class="blank"
+                  ></td>
+                </span>
+              </td>
+
+              <td v-if="judge==false">
+                <input
+                  type="text"
+                  v-model="usersInformation.height"
+                  class="word"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td class="detail-head">
+                体重
+                <span v-if="judge==false">
+                  <td
+                    v-text="usersInformation.weight"
+                    v-if="judge==true"
+                    class="blank"
+                  ></td>
+                </span>
+              </td>
+
+              <td v-if="judge==false">
+                <input
+                  type="text"
+                  v-model="usersInformation.weight"
+                  class="word"
+                />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-  </div>
-  
-  <script>
-    let vmMain = new Vue({
-      el: '#vm',
-      data: {
-        users: [
-          {id: 1, name: '岡山太郎', age: 17, height: 165, weight: 60,},
-          {id: 2, name: '鳥取一郎', age: 18, height: 170, weight: 80,},
-          {id: 3, name: '山田花子', age: 19, height: 155, weight: 50,}
-        ],
-        usersInformation:{id: '', name: '', age: '', height: '', weight: ''},
-        count: 0,
-        judge: true
-      },
-      methods: {
-        showDetails: function(user){
-          this.usersInformation=user
+    </div>
+
+    <script>
+      let vmMain = new Vue({
+        el: '#vm',
+        data: {
+          users: [
+            { id: 1, name: '岡山太郎', age: 17, height: 165, weight: 60 },
+            { id: 2, name: '鳥取一郎', age: 18, height: 170, weight: 80 },
+            { id: 3, name: '山田花子', age: 19, height: 155, weight: 50 },
+          ],
+          usersInformation: {
+            id: '',
+            name: '',
+            age: '',
+            height: '',
+            weight: '',
+          },
+          count: 0,
+          judge: true,
+          nextId: 4,
+          editIndex: null,
         },
-        countUp: function(){
-          this.count++
-          if(this.count%2==1){
-            this.judge=false
-          }else{
-            this.judge=true
-          }
-          console.log(this.judge)
-        }
-      }
-    });
-  </script>
-</body>
+        methods: {
+          showDetails: function (user, index) {
+            this.usersInformation = Object.assign({}, user);
+            this.editIndex = index;
+          },
+          countUp: function () {
+            this.count++;
+            if (this.count % 2 == 1) {
+              this.judge = false;
+            } else {
+              this.judge = true;
+            }
+          },
+          saveEdit: function () {
+            if (this.editIndex == null) {
+              this.users.push(Object.assign({}, this.usersInformation));
+              this.countUp();
+              this.usersInformation = {
+                id: '',
+                name: '',
+                age: '',
+                height: '',
+                weight: '',
+              };
+            } else {
+              Object.assign(this.users[this.editIndex], this.usersInformation);
+              this.judge = true;
+              this.editIndex = null;
+              this.usersInformation = {
+                id: '',
+                name: '',
+                age: '',
+                height: '',
+                weight: '',
+              };
+            }
+          },
+          addData: function () {
+            this.countUp();
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
