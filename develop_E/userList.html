@@ -25,13 +25,16 @@
           <td>{{user.name}}</td>
           <td>{{user.old}}</td>
           <td><button v-on:click="showDetail(index)">詳細</button></td>
+
         </tr>
     </table>
     <div>
       <span>--詳細--</span>
       <div>
         <button v-on:click="showEditing()">編集</button>
+        <button v-on:click="keep()">保存</button>
         <span v-if="this.judgementBox" style="color: red;">編集中</span>
+        <button v-on:click="addition()">追加</button>
       </div>
     </div>
     
@@ -43,6 +46,7 @@
             <span v-if="this.vanish">
               {{this.SelectedId}}
             </span>
+            <span v-if=""></span>
             <input type="text" v-if="this.judgementBox" v-model="this.SelectedId" size="8">
           </td>
         </tr>
@@ -52,7 +56,7 @@
             <span v-if="this.vanish">
               {{this.SelectedName}}
             </span>
-            <input type="text" v-if="this.judgementBox" v-model="this.SelectedName" size="8">
+            <input type="text" v-if="judgementBox" v-model="SelectedName" size="8">
           </td>
         </tr>
       </table>
@@ -63,7 +67,7 @@
               <span v-if="this.vanish">
                 {{this.SelectedOld}}
               </span>
-              <input type="text" v-if="this.judgementBox" v-model="this.SelectedOld" size="8">
+              <input type="text" v-if="judgementBox" v-model="SelectedOld" size="8">
             </td>
           </tr>
           <tr>
@@ -72,7 +76,7 @@
               <span v-if="this.vanish">
                 {{this.SelectedHeight}}
               </span>
-              <input type="text" v-if="this.judgementBox" v-model="this.SelectedHeight" size="8">
+              <input type="text" v-if="judgementBox" v-model="SelectedHeight" size="8">
             </td>
           </tr>
           <tr>
@@ -81,7 +85,7 @@
               <span v-if="this.vanish">
                 {{ this.SelectedWeight }}
               </span>
-              <input type="text" v-if="this.judgementBox" v-model="this.SelectedWeight" size="8">
+              <input type="text" v-if="judgementBox" v-model="SelectedWeight" size="8">
             </td>
           </tr>
       </table>
@@ -104,6 +108,7 @@
           SelectedOld: "" ,
           SelectedHeight: "" ,
           SelectedWeight: "" ,
+          keepIndex: "" ,
           users:[
             {id: 1, name: '岡山 太郎', old: 17, height: 170, weight: 60},
             {id: 2, name: '鳥取 一郎', old: 18, height: 175, weight: 65},
@@ -111,15 +116,21 @@
           ],
           number : 0,
           judgementBox: "" ,
-          vanish: true
+          vanish: true,
+          addId: "" ,
+          addName: "" ,
+          addOld: "" ,
+          addHeight: "" ,
+          addWeight: "" ,
         },
         methods:{
           showDetail: function(index){
-            this.SelectedId = this.users[index].id
-            this.SelectedName = this.users[index].name
-            this.SelectedOld = this.users[index].old
-            this.SelectedHeight = this.users[index].height
-            this.SelectedWeight= this.users[index].weight
+            this.SelectedId = this.users[index].id;
+            this.SelectedName = this.users[index].name;
+            this.SelectedOld = this.users[index].old;
+            this.SelectedHeight = this.users[index].height;
+            this.SelectedWeight= this.users[index].weight;
+            this.keepIndex = index;
             // document.getElementById('index').style.backgroundColor = 'yellow';
           },
           showEditing: function(){
@@ -131,7 +142,29 @@
               this.judgementBox = false
               this.vanish = true 
             }
-          }
+          },
+          keep: function(){
+            // 保存ボタンを押したときにユーザー表の何番目か
+            // そのあと代入
+            // 何をやったらaaaとコンソール出力されるか
+console.log(this.keepIndex);
+console.log(this.SelectedName);
+            this.users[this.keepIndex].name = this.SelectedName;
+            this.users[this.keepIndex].id = this.SelectedId;
+            this.users[this.keepIndex].old = this.SelectedOld;
+            this.users[this.keepIndex].height = this.SelectedHeight;
+            this.users[this.keepIndex].weight = this.SelectedWeight;
+
+            '保存ボタン'
+          },
+          addition: function(){
+            this.judgementBox = true;
+            this.users[this.keepIndex].name = this.addName;
+            this.users[this.keepIndex].id = this.addId;
+            this.users[this.keepIndex].old = this.addOld;
+            this.users[this.keepIndex].height = this.addHeight;
+            this.users[this.keepIndex].weight = this.addWeight;
+          },
         },
       })
   </script> 
