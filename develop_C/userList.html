@@ -18,25 +18,34 @@
           <th></th>
         </tr>
         <tr v-for="user in users" :key="user.id">
-          <td v-bind:class="{'detail':user == selectedUser}">{{ user.id }}</td>
-          <td v-bind:class="{'detail':user == selectedUser}">{{ user.name }}</td>
-          <td v-bind:class="{'detail':user == selectedUser}">{{ user.age }}</td>
-          <td v-bind:class="{'detail':user == selectedUser}"><button @click="showDetail(user)">詳細</button></td>
+          <td v-bind:class="{'detail':user.id == selectedUser.id}">
+            {{ user.id }}
+          </td>
+          <td v-bind:class="{'detail':user.id == selectedUser.id}">
+            {{ user.name }}
+          </td>
+          <td v-bind:class="{'detail':user.id == selectedUser.id}">
+            {{ user.age }}
+          </td>
+          <td v-bind:class="{'detail':user.id == selectedUser.id}">
+            <button @click="showDetail(user)">詳細</button>
+          </td>
         </tr>
       </table>
       <h5>--詳細--</h5>
+      <div v-bind:class="{'button-division':true}">
         <button @click="edit()">編集</button>
-      <!-- divition → division の間違いと思われるのでclass名・CSSともに修正を -->
+        <button @click="add()">追加</button>
+        <button @click="save()">保存</button>
+        <button @click="clear()">クリア</button>
+        <span style="color: red;" v-if="this.isEdit">編集中</span>
+      </div>
       <div class="table-division">
-        <!-- 詳細テーブル -->
         <table>
           <tr>
             <th>ID</th>          
-            <td v-if="isEdit==false">
+            <td>
               {{selectedUser.id}}
-            </td>
-            <td v-else>
-              <input type="text" id="ID">
             </td>
           </tr>
           <tr>
@@ -45,35 +54,35 @@
               {{selectedUser.name}}
             </td>
             <td v-else>
-              <input type="text" id="my-name">
+              <input type="text" size=5px id="my-name" v-model="selectedUser.name">
             </td>
           </tr>
           <table>
             <tr>
               <th>年齢</th>
-              <td v-if="isEdit==false">
+              <td v-if="isEdit==false ">
                 {{selectedUser.age}}
               </td>
               <td v-else>
-                <input type="text" id="age">
+                <input type="text" size=5px id="age" v-model="selectedUser.age">
               </td>
             </tr>
             <tr>
               <th>身長</th>
-              <td v-if="isEdit==false">
+              <td v-if="isEdit==false ">
                 {{selectedUser.height}}
               </td>
               <td v-else>
-                <input type="text" id="height">
+                <input type="text" size=5px id="height" v-model="selectedUser.height">
               </td>
             </tr>
             <tr>
               <th>体重</th>
-              <td v-if="isEdit==false">
+              <td v-if="isEdit==false ">
                 {{selectedUser.weight}}
               </td>
               <td v-else>
-                <input type="text" id="weight">
+                <input type="text" size=5px id="weight" v-model="selectedUser.weight">
               </td>
             </tr>
           </table>
@@ -83,31 +92,78 @@
   </body>
 </html>
 <script>
-  new Vue({
+  let vm = new Vue({
     el: '#userTable',
     data: {
-      isEdit:false,
-      // selectedUser.id のようにidは使用するが、IDは使用していないので削除してOKです。
+      isEdit:"",
+      goEdit:"",
+      goAdd:"",
+      number:0,
       users: [
         { id: 1, name: '岡山太郎', age: 17, height: 180, weight: 90 },
-        { id: 2,  name: '鳥取一郎', age: 18, height: 170, weight: 60 },
-        { id: 3,  name: '山田花子', age: 19, height: 143, weight: 40 },
+        { id: 2, name: '鳥取一郎', age: 18, height: 170, weight: 60 },
+        { id: 3, name: '山田花子', age: 19, height: 143, weight: 40 },
       ],
-      // selectedUser が複数になることは現時点ないので配列でないようにしましょう。
       // 逆に配列の状態で上手く行っているのかが不明です…Vue.jsが勝手に配慮してくれている？
       selectedUser: { ID: '', name: '', age: '', height: '', weight: '' },
+      selectedUser0: { ID: '', name: '', age: '', height: '', weight: '' },
+      whatNumber:'',
     },
     methods: {
       showDetail: function (user) {
-        this.selectedUser = user;
+        this.selectedUser = Object.assign({},user);
       },
       edit: function () {
-        if(this.isEdit){
-          false;
+        this.number++ ;
+        if(this.number % 2 != 0){
+          this.isEdit = true ;
+        }else{
+          this.isEdit = false ;
         }
+        this.goEdit = true
       },
-
+      add: function () {
+        this.number++ ;
+        if(this.number % 2 != 0){
+          this.isEdit = true ;
+        }else{
+          this.isEdit = false ;
+        }
+        this.goAdd = true
       },
+      save: function () {
+    if(this.goEdit){
+    // 【編集】
+        this.number++
+        if(this.number % 2 != 0){
+          this.isEdit = true
+        }else{
+          this.isEdit = false
+        }
+        whatNumber = this.selectedUser.id
+        this.users[whatNumber-1] = this.selectedUser
+    }else if(this.goAdd){
+    // 【追加】
+        this.number++
+        if(this.number % 2 != 0){
+          this.isEdit = true
+        }else{
+          this.isEdit = false
+        }
+        this.users.length++
+        this.users[this.users.length-1] =  {
+           id: this.users.length ,  
+           name: this.selectedUser.name, 
+           age: this.selectedUser.age, 
+           height: this.selectedUser.height, 
+           weight: this.selectedUser.weight 
+          }
+     }
+      },
+      clear: function (){
+        this.selectedUser = Object.assign({},this.selectedUser0);
+          }
     },
-  );
+  },
+);
 </script>
