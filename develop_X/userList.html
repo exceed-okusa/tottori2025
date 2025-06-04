@@ -32,6 +32,8 @@
       </table>
       <h5>---詳細---</h5>
       <button v-on:click="addEdit()">編集</button>
+      <button  v-on:click="decision(indexCopy)">保存</button>
+      <button v-on:click="addiction(indexCopy)">追加</button>
       <span class="editing">{{message}}</span>
       <div class="field">
         <table class="field-left">
@@ -40,7 +42,7 @@
               <th>ID</th>
               <td>
                 <template v-if="isEdit">
-                  <input v-model="selectedPersonality.id" />
+                  <span v-text="selectedPersonality.id" ></span>
                 </template>
                 <template v-else> {{selectedPersonality.id}} </template>
               </td>
@@ -49,7 +51,7 @@
               <th>名前</th>
               <td>
                 <template v-if="isEdit">
-                  <input v-model="selectedPersonality.name" />
+                  <input v-model="selectedPersonality.name" >
                 </template>
                 <template v-else> {{selectedPersonality.name}} </template>
               </td>
@@ -127,15 +129,34 @@
           ],
           isEdit: false,
           message: '',
+          indexCopy: '',
+          touchCount: '2',
         },
         methods: {
           showDetail: function (index) {
-            this.selectedPersonality = this.personalities[index];
+            console.log(index);
+            this.selectedPersonality = Object.assign({},this.personalities[index]);
           },
-          addEdit: function (index) {
+          addEdit: function () {
             this.isEdit = true;
             this.message = '編集中';
           },
+          decision: function (indexCopy) {
+            this.$set(this.personalities,indexCopy,this.selectedPersonality);
+            this.isEdit = false
+          },
+          addiction: function (indexCopy) {
+            this.message = '追加中';
+            this.isEdit = true
+            this.touchCount++;
+            this.indexCopy = this.touchCount;
+            console.log(this.indexCopy)
+            this.personalities[indexCopy] = this.selectedPersonality
+            this.personalities[indexCopy].id = this.touchCount
+            this.personalities[indexCopy].id++
+            this.selectedPersonality = Object.assign({},this.selectedPersonality)
+            console.log(this.personalities)
+          }
         },
       });
     </script>
